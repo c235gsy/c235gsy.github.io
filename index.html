@@ -384,6 +384,136 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/07/---/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Siyuan">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Dustless Land">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/03/07/---/" itemprop="url">Hello World</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-03-07T15:10:14+08:00">
+                2019-03-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
+<h2 id="BLAST-的基本原理"><a href="#BLAST-的基本原理" class="headerlink" title="BLAST 的基本原理"></a>BLAST 的基本原理</h2><h3 id="什么是BLAST"><a href="#什么是BLAST" class="headerlink" title="什么是BLAST"></a>什么是BLAST</h3><p>Basic Local Alignment Search Tool (BLAST) 是一套在蛋白质数据库或DNA数据库中进行相似性比较的分析工具。BLAST程序能迅速与公开数据库进行相似性序列比较。BLAST结果中的得分是对一种对相似性的统计说明。</p>
+<p>在NCBI上分为多种，常用的有N-BLAST(核苷酸序列比对检索)和P-BLAST(蛋白比对检索)。此外还有Primer BLAST等用于搜索和设计特殊核酸序列的工具。BLAST对一条或多条序列(可以是任何形式的序列)在一个或多个核酸或蛋白序列库中进行比对。</p>
+<p>BLAST还能发现具有缺口的能比对上的序列。BLAST可处理任何数量的序列，包括蛋白序列和核算序列；也可选择多个数据库但数据库必须是同一类型的，即要么都是蛋白数据库要么都是核酸数据库。所查询的序列和调用的数据库则可以是任何形式的组合，既可以是核酸序列到蛋白库中作查询，也可以是蛋白序列到蛋白库中作查询，反之亦然。</p>
+<p>BLAST是一个被广泛使用于分析生物信息的程序，因为它可以兼顾我们在做搜索时的速度以及搜索结果的精确度。因为当我们所要搜索的目标数据库非常庞大的时候，速度就变成一项很需要考量的因素。在像BLAST和FASTA这些快速算法被开发之前，我们是使用动态规划算法来作数据库的序列搜索，这真的非常的耗时。BLAST使用启发式搜索来找出相关的序列，在速度上比完全只使用动态规划大约快上50倍左右，不过它不像动态规划能够保证搜索到的序列（Database sequence）和所要找的序列（Query sequence）之间的相关性，BLAST的工作就是尽可能找出数据库中和所要查询的序列相关的信息而已，精确度稍微低一点。</p>
+<hr>
+<h3 id="BLAST的基本工作原理"><a href="#BLAST的基本工作原理" class="headerlink" title="BLAST的基本工作原理"></a>BLAST的基本工作原理</h3><h4 id="1-移除Query序列中之低复杂度以及有串接重复现象的区域"><a href="#1-移除Query序列中之低复杂度以及有串接重复现象的区域" class="headerlink" title="1. 移除Query序列中之低复杂度以及有串接重复现象的区域"></a>1. 移除Query序列中之低复杂度以及有串接重复现象的区域</h4><p>低复杂度是指由很少种类的元素（如氨基酸）所组成的一个区域；而串接重复现象是指在一个Query序列中，有两段串连的区域它们组成的方式一模一样。这两种在序列中的区域可能会让BLAST找出一些虽然分数够高，但是其实和Query序列并不相关之序列，所以在我们执行搜索之前，要先把Query序列中的这两种区域滤掉。BLAST的实际作法是，它会把这些区域用符号代替，并且在搜索的时候忽略这些符号。蛋白质序列中，就用X符号标示；而DNA序列中，则用N符号标示。低复杂度区域的部分，BLAST是用一个叫做SEG的程序来处理蛋白质序列，而用叫做DUST的程序来处理DNA序列。另一方面，蛋白质序列中之串接重复现象的区域则是使用XNU来处理。</p>
+<hr>
+<h4 id="2-将Query序列中每k个字的组合做成一个表"><a href="#2-将Query序列中每k个字的组合做成一个表" class="headerlink" title="2. 将Query序列中每k个字的组合做成一个表"></a>2. 将Query序列中每k个字的组合做成一个表</h4><p>以k=3为例（DNA序列中，我们则常以k=11为例），我们”依序”将Query序列中每3个字的组合视为一个字组，并将这些字组列在一张字组表上，直到Query序列中最后一个字也被收入进表上为止。</p>
+<hr>
+<h4 id="3-列出我们所关心的所有可能之字组"><a href="#3-列出我们所关心的所有可能之字组" class="headerlink" title="3. 列出我们所关心的所有可能之字组"></a>3. 列出我们所关心的所有可能之字组</h4><p>这个步骤就是BLAST和FASTA之间很重要的一点不同处。FASTA关心所有在第二步中所找出的字组表上的每一个字组，它会去搜索数据库中的序列，看看这些序列是否含有这些字组；然而，BLAST只对高分的一些字组有兴趣，而字组的分数是由依序比较字组间的每个字，再配合得分矩阵（substitution matrix或scoring matrix）所产生的。因此，对于每一个字组而言，可能有20^3个BLAST可能关心的字组，当然这些字组经过一个门槛分数的筛选后，只有少数的字组会留下，而这些就是BLAST真正所关心的字组。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/07/BLAST 的基本原理/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -551,7 +681,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-count">3</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
