@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
   <title>Dustless Land</title>
   
-  
+  <subtitle>Endless</subtitle>
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://www.github.com/c235gsy/"/>
